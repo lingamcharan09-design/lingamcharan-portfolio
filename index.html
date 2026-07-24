@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lingam Charan | VLSI / Semiconductor Engineer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Theme Tokens — Top Banana / Muscle-Analog */
+        :root {
+            --bg: #0A0A08;
+            --surface: #1A1814;
+            --primary: #F5C518;
+            --accent: #F5C518;
+            --text: #F0EBE0;
+            --muted: #8A8575;
+            --border: #2A2720;
+
+            --font-display: 'Barlow Condensed', system-ui, sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --dur: 350ms;
+
+            --radius: 2px;
+            --border-w: 1.5px;
+            --shadow: 0 4px 8px rgba(0,0,0,.3), 0 16px 32px rgba(0,0,0,.2);
+
+            --space: 0.5rem;
+            --scale: 1.333;
+            --tracking-display: -0.02em;
+            --tracking-label: 0.10em;
+
+            --stripe-w: 3px;
+            --stripe-bold: 8px;
+            --chrome: linear-gradient(135deg, #8A8575 0%, #F0EBE0 45%, #8A8575 100%);
+            
+            /* Fibonacci Spacing */
+            --space-1: 34px;
+            --space-2: 55px;
+            --space-3: 89px;
+            --space-4: 144px;
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, .display-font {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            line-height: 1.05;
+            letter-spacing: var(--tracking-display);
+            margin: 0;
+        }
+        
+        .label-font {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-label);
+            font-size: 0.85rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-2);
+        }
+
+        /* Background Noise/Grain */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.025; /* Very subtle 1/f spatial frequency feel */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        /* Animations */
+        .rev-in {
+            opacity: 0;
+            transform: translateY(20px) scale(0.97);
+            transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+        }
+        .rev-in.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Sections */
+        section {
+            padding: var(--space-4) 0;
+            position: relative;
+        }
+
+        /* Nav */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 8, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: var(--border-w) solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            padding: 0.2rem 0.5rem;
+            border-left: 3px solid var(--primary);
+        }
+        
+        nav {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .nav-link {
+            color: var(--muted);
+            font-weight: 700;
+            position: relative;
+            transition: color 200ms var(--ease);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+            transform: scaleX(0) skewX(-20deg);
+            transform-origin: left;
+            transition: transform 200ms var(--ease);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            transform: scaleX(1) skewX(-20deg);
+        }
+
+        /* Hero */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px; /* offset for nav */
+            overflow: hidden;
+        }
+        
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .hero-label {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-name {
+            font-size: clamp(3rem, 8vw, 7.5rem);
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero-stripe {
+            height: var(--stripe-bold);
+            background-color: var(--primary);
+            width: 0;
+            margin-bottom: var(--space-2);
+            transition: width 800ms var(--ease);
+        }
+        .hero-stripe.active {
+            width: 100%;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--muted);
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .cycle-wrapper {
+            position: relative;
+            display: inline-block;
+            height: 1.5em;
+            overflow: hidden;
+            width: 250px;
+        }
+        
+        .cycle-word {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: var(--text);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 300ms var(--ease), transform 300ms var(--ease);
+        }
+        
+        .cycle-word.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .cycle-word.exiting {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-label);
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            border: none;
+            cursor: pointer;
+            transition: transform 200ms var(--ease), box-shadow 200ms var(--ease);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--bg);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            /* Simulating border with clip-path */
+            position: relative;
+        }
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--primary);
+            z-index: -2;
+        }
+        .btn-outline::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px; bottom: 2px;
+            background-color: var(--bg);
+            z-index: -1;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Visual - Angular composition */
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+        
+        .shape {
+            position: absolute;
+            background-color: var(--surface);
+            transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+        }
+        
+        .shape-1 {
+            width: 60%;
+            height: 300px;
+            right: 10%;
+            top: 20%;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0% 100%);
+            border-bottom: 4px solid var(--primary);
+            z-index: 2;
+        }
+        
+        .shape-2 {
+            width: 40%;
+            height: 400px;
+            right: 0;
+            top: 10%;
+            background-color: var(--bg);
+            border: 2px solid var(--border);
+            clip-path: polygon(0 0, 100% 15%, 100% 100%, 15% 100%);
+            z-index: 1;
+        }
+        
+        .shape-3 {
+            width: 25%;
+            height: 80px;
+            right: 50%;
+            top: 60%;
+            background: var(--chrome);
+            clip-path: polygon(20% 0, 100% 0, 80% 100%, 0% 100%);
+            z-index: 3;
+        }
+        
+        .shape-4 {
+            width: 15%;
+            height: 200px;
+            right: 25%;
+            top: 0;
+            background-color: var(--primary);
+            clip-path: polygon(0 0, 100% 0, 60% 100%, 0% 100%);
+            z-index: 4;
+        }
+
+        /* Utilities */
+        .section-label {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .section-heading {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: var(--space-3);
+        }        /* About */
+        #about {
+            background-color: var(--bg);
+            padding-top: var(--space-4);
+        }
+        
+        .diagonal-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-color: var(--bg);
+            clip-path: polygon(0 100%, 100% 0, 100% 100%);
+            transform: translateY(-99%); /* Prevent 1px gap */
+            z-index: 10;
+        }
+        
+        .about-layout {
+            display: grid;
+            grid-template-columns: 55% 45%;
+            gap: var(--space-3);
+            align-items: center;
+        }
+        
+        .about-text p {
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+        
+        .quote-block {
+            margin-top: var(--space-2);
+            padding: 1.5rem;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+        .quote-block p {
+            font-style: italic;
+            margin-bottom: 0;
+            color: var(--text);
+        }
+        
+        .about-visual {
+            position: relative;
+            height: 450px;
+        }
+        
+        .photo-frame {
+            width: 100%;
+            height: 100%;
+            background-color: var(--surface);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+        
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 40px; height: 40px;
+            border-top: 4px solid var(--primary);
+            border-right: 4px solid var(--primary);
+            z-index: 2;
+        }
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 40px; height: 40px;
+            border-bottom: 4px solid var(--primary);
+            border-left: 4px solid var(--primary);
+            z-index: 2;
+        }
+        
+        .placeholder-text {
+            color: var(--muted);
+            font-family: var(--font-mono);
+            letter-spacing: var(--tracking-label);
+            text-transform: uppercase;
+        }
+
+        /* TapeoutX Section */
+        .tx-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3);
+            align-items: center;
+        }
+        .tx-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .tx-stat-card {
+            background-color: var(--bg);
+            padding: 1.5rem;
+            border-top: 2px solid var(--primary);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            text-align: center;
+        }
+        .tx-stat-num {
+            font-size: 3rem;
+            color: var(--text);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .tx-stat-label {
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+        .tx-brand {
+            font-size: clamp(3rem, 6vw, 5rem);
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }  /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-2);
+            margin-top: var(--space-2);
+        }
+        
+        .skill-card {
+            background-color: var(--bg);
+            padding: 2rem;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+            border-top: 3px solid var(--primary);
+            transition: transform 200ms var(--ease);
+        }
+        .skill-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .skill-cat {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .skill-tag {
+            background-color: var(--border);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-3);
+            margin-top: var(--space-2);
+        }
+        
+        .project-card {
+            background-color: var(--surface);
+            padding: 2rem;
+            transform: skewX(-2deg);
+            border-left: 4px solid var(--primary);
+            transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+        }
+        
+        .project-card:hover {
+            transform: skewX(-2deg) translateX(8px);
+            box-shadow: var(--shadow);
+        }
+        
+        .project-content {
+            transform: skewX(2deg); /* counter-skew */
+        }
+        
+        .project-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-tags span {
+            color: var(--primary);
+            background-color: var(--bg);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+        }
+        
+        .project-content p {
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Experience */
+        .timeline {
+            margin-top: var(--space-2);
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--border);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--space-3);
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: -3rem;
+            top: 0.5rem;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 12px solid var(--primary);
+            transform: translateX(-5px); /* center over the 2px line */
+        }
+        
+        .timeline-content {
+            background-color: var(--bg);
+            padding: 1.5rem 2rem;
+            clip-path: polygon(0 0, 100% 0, 98% 100%, 0 100%);
+        }
+        
+        .timeline-date {
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+        
+        .timeline-content p {
+            color: var(--text);
+            margin-top: 0.5rem;
+        }
+
+        /* Contact */
+        .contact-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: var(--space-2) 0;
+            align-items: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background-color: var(--surface);
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            transition: transform 200ms var(--ease);
+            width: fit-content;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .contact-item:hover .label-font {
+            color: var(--primary);
+        }
+        
+        .contact-icon {
+            width: 16px;
+            height: 16px;
+            background-color: var(--primary);
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border);
+            color: var(--text);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: color 200ms var(--ease), border-color 200ms var(--ease);
+        }
+        
+        .social-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo label-font">LC</div>
+            <nav class="label-font">
+                <a href="#about" class="nav-link">ABOUT</a>
+                <a href="#skills" class="nav-link">SKILLS</a>
+                <a href="#projects" class="nav-link">PROJECTS</a>
+                <a href="#experience" class="nav-link">EXPERIENCE</a>
+                <a href="#contact" class="nav-link">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container hero-layout">
+            <div class="hero-content">
+                <div class="hero-label label-font rev-in">VLSI / SEMICONDUCTOR ENGINEER</div>
+                <h1 class="hero-name display-font rev-in">LINGAM CHARAN</h1>
+                <div class="hero-stripe rev-in" id="heroStripe"></div>
+                
+                <div class="hero-subtitle rev-in">
+                    <span style="color: var(--muted)">//</span>
+                    <div class="cycle-wrapper">
+                        <span class="cycle-word visible">VLSI Design Student</span>
+                        <span class="cycle-word">RTL Design Enthusiast</span>
+                        <span class="cycle-word">TapeoutX Founder</span>
+                    </div>
+                </div>
+                
+                <div class="hero-ctas rev-in">
+                    <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
+                    <a href="#contact" class="btn btn-outline">CONTACT ME</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="shape shape-1 rev-in" style="transition-delay: 100ms;"></div>
+                <div class="shape shape-2 rev-in" style="transition-delay: 200ms;"></div>
+                <div class="shape shape-3 rev-in" style="transition-delay: 300ms;"></div>
+                <div class="shape shape-4 rev-in" style="transition-delay: 400ms;"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container about-layout">
+            <div class="about-text">
+                <span class="section-label label-font rev-in">// ABOUT</span>
+                <h2 class="section-heading display-font rev-in">THE ENGINEER</h2>
+                
+                <div class="rev-in">
+                    <p>I am a B.Tech Electronics Engineering (VLSI Design & Technology) student at NRIIT, Guntur, deeply passionate about Digital Logic Design and RTL coding.</p>
+                    <p>In addition to my academic pursuits, my core focus is <strong style="color: var(--primary);">TapeoutX</strong>, a student-driven VLSI community bridging the academic-industry gap through content and mentorship.</p>
+                    <p>I am a practitioner of high-intensity deep work, building systems that reduce decision fatigue and allow me to execute efficiently under strict time constraints.</p>
+                </div>
+                
+                <div class="quote-block rev-in">
+                    <p>"Every hour matters. I build the foundations that make complex systems possible—whether that's digital hardware or a thriving engineering community."</p>
+                </div>
+            </div>
+            
+            <div class="about-visual rev-in">
+                <div class="photo-frame">
+                    <span class="placeholder-text">PORTRAIT IMAGE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placeholder sections to be built out -->
+    <section id="skills" style="background-color: var(--surface);">
+        <div class="diagonal-top" style="background-color: var(--surface);"></div>
+        <div class="container">
+            <span class="section-label label-font rev-in">// SKILLS</span>
+            <h2 class="section-heading display-font rev-in">TECH STACK</h2>
+            
+            <div class="skills-grid">
+                <!-- HDLs -->
+                <div class="skill-card rev-in">
+                    <h3 class="skill-cat label-font">Hardware Description Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Verilog HDL</span>
+                        <span class="skill-tag">VHDL</span>
+                    </div>
+                </div>
+                
+                <!-- RTL Design -->
+                <div class="skill-card rev-in" style="transition-delay: 100ms;">
+                    <h3 class="skill-cat label-font">RTL Design</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Finite State Machines (FSMs)</span>
+                        <span class="skill-tag">Control Path Design</span>
+                        <span class="skill-tag">Clock/Reset Domains</span>
+                        <span class="skill-tag">RTL Coding Standards</span>
+                        <span class="skill-tag">Digital Logic Design</span>
+                    </div>
+                </div>
+                
+                <!-- Digital Architecture -->
+                <div class="skill-card rev-in" style="transition-delay: 200ms;">
+                    <h3 class="skill-cat label-font">Digital Architecture Concepts</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Computer Architecture Fundamentals</span>
+                        <span class="skill-tag">Memory Interfaces (FIFO, SRAM)</span>
+                        <span class="skill-tag">On-Chip Bus Protocols</span>
+                    </div>
+                </div>
+                
+                <!-- EDA Tools — Commercial -->
+                <div class="skill-card rev-in">
+                    <h3 class="skill-cat label-font">Simulation & EDA Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Intel Quartus Prime</span>
+                        <span class="skill-tag">ModelSim</span>
+                        <span class="skill-tag">Xilinx ISE</span>
+                        <span class="skill-tag">EDA Playground</span>
+                    </div>
+                </div>
+                
+                <!-- EDA Tools — Open Source -->
+                <div class="skill-card rev-in" style="transition-delay: 100ms;">
+                    <h3 class="skill-cat label-font">Analog & Hardware Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Op-Amps</span>
+                        <span class="skill-tag">ADC/DAC</span>
+                        <span class="skill-tag">Oscilloscopes</span>
+                        <span class="skill-tag">Soldering</span>
+                    </div>
+                </div>
+                
+                <!-- Programming -->
+                <div class="skill-card rev-in" style="transition-delay: 200ms;">
+                    <h3 class="skill-cat label-font">Programming</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">C (Basic)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="diagonal-top" style="background-color: var(--bg); clip-path: polygon(0 0, 100% 100%, 0% 100%);"></div>
+        <div class="container">
+            <span class="section-label label-font rev-in">// PROJECTS</span>
+            <h2 class="section-heading display-font rev-in">BUILT FROM SCRATCH</h2>
+            
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card rev-in">
+                    <div class="project-content">
+                        <h3 class="display-font">Synchronous FIFO Memory Controller</h3>
+                        <div class="project-tags label-font">
+                            <span>Verilog HDL</span>
+                            <span>Quartus Prime</span>
+                            <span>ModelSim</span>
+                        </div>
+                        <p>Designed and implemented a synchronous FIFO buffer in Verilog with an 8-bit wide, 16-deep memory array. Developed the controller logic using separate read/write pointers and status flags computed based on an internal item counter. Simulated and verified read, write, and boundary conditions using ModelSim.</p>
+                        <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-top: 1rem;">View Details</a>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card rev-in" style="transition-delay: 100ms;">
+                    <div class="project-content">
+                        <h3 class="display-font">FILO (First-In-Last-Out) Stack</h3>
+                        <div class="project-tags label-font">
+                            <span>Verilog HDL</span>
+                            <span>ModelSim</span>
+                        </div>
+                        <p>Designed an 8-bit wide, 16-deep LIFO/FILO hardware stack in Verilog. Designed stack pointer controls and counter logic to track stack depth, incorporating full and empty flag logic. Modeled and simulated simultaneous read and write (push-pop) concurrency cases to verify data routing and flag behavior.</p>
+                        <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-top: 1rem;">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAPEOUTX DEDICATED SECTION -->
+    <section id="tapeoutx" style="background-color: var(--surface);">
+        <div class="diagonal-top" style="background-color: var(--surface); clip-path: polygon(0 100%, 100% 0, 100% 100%);"></div>
+        <div class="container tx-layout">
+            <div class="tx-content">
+                <span class="section-label label-font rev-in">// FOUNDER</span>
+                <div class="tx-brand-container rev-in" style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem;">
+                    <img src="assets/images/tapeoutx_logo.jpg" alt="TapeoutX Logo" style="width: 80px; height: 80px; object-fit: cover; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); border-left: 3px solid var(--primary);">
+                    <h2 class="tx-brand display-font" style="margin-bottom: 0;">TAPEOUTX</h2>
+                </div>
+                <p class="rev-in" style="font-size: 1.125rem; margin-bottom: 2rem;">Founded a student-driven VLSI media brand and community. Built the community website, organized webinars in collaboration with PrimeMOS Research & Solutions, and actively produce technical Verilog content.</p>
+                <a href="https://tapeoutx.vercel.app" target="_blank" class="btn btn-primary rev-in">VISIT TAPEOUTX</a>
+            </div>
+            <div class="tx-stats">
+                <div class="tx-stat-card rev-in" style="transition-delay: 100ms;">
+                    <span class="tx-stat-num display-font">220+</span>
+                    <span class="tx-stat-label label-font">DISCORD MEMBERS</span>
+                </div>
+                <div class="tx-stat-card rev-in" style="transition-delay: 200ms; transform: translateY(20px);">
+                    <span class="tx-stat-num display-font">350+</span>
+                    <span class="tx-stat-label label-font">INSTAGRAM AUDIENCE</span>
+                </div>
+                <div class="tx-stat-card rev-in" style="transition-delay: 300ms;">
+                    <span class="tx-stat-num display-font">150+</span>
+                    <span class="tx-stat-label label-font">TELEGRAM COMMUNITY</span>
+                </div>
+                <div class="tx-stat-card rev-in" style="transition-delay: 400ms; transform: translateY(20px);">
+                    <span class="tx-stat-num display-font">2+</span>
+                    <span class="tx-stat-label label-font">INDUSTRY WEBINARS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" style="background-color: var(--bg);">
+        <div class="diagonal-top" style="background-color: var(--bg); clip-path: polygon(0 0, 100% 100%, 0% 100%);"></div>
+        <div class="container">
+            <span class="section-label label-font rev-in">// EXPERIENCE</span>
+            <h2 class="section-heading display-font rev-in">THE ROAD</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item rev-in">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content" style="background-color: var(--surface);">
+                        <div class="timeline-date label-font">2021 – 2024</div>
+                        <h3 class="display-font">Diploma ECE</h3>
+                        <h4 class="label-font" style="color: var(--primary); margin-bottom: 0.5rem;">Hindu College of Engineering</h4>
+                        <p>Score: 84.6%.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item rev-in">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content" style="background-color: var(--surface);">
+                        <div class="timeline-date label-font">2024 – Present</div>
+                        <h3 class="display-font">B.Tech ECE (VLSI Design)</h3>
+                        <h4 class="label-font" style="color: var(--primary); margin-bottom: 0.5rem;">NRIIT</h4>
+                        <p>CGPA: 7.55/10.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item rev-in">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content" style="background-color: var(--surface);">
+                        <div class="timeline-date label-font">Feb 2026</div>
+                        <h3 class="display-font">Technical Coordinator</h3>
+                        <h4 class="label-font" style="color: var(--primary); margin-bottom: 0.5rem;">SARITAM 2K26</h4>
+                        <p>Conceptualized and managed 'Think & Pick' digital electronics competition. Developed custom web app for quiz automation.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item rev-in">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content" style="background-color: var(--surface);">
+                        <div class="timeline-date label-font">April 2026 – Present</div>
+                        <h3 class="display-font">Technical Content Creator</h3>
+                        <h4 class="label-font" style="color: var(--primary); margin-bottom: 0.5rem;">Instagram Channel (VLSI & Verilog)</h4>
+                        <p>Publish technical content, logic design tutorials, and Verilog coding guidelines for an audience of 350+ followers.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item rev-in">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content" style="background-color: var(--surface);">
+                        <div class="timeline-date label-font">April 2026 – Present</div>
+                        <h3 class="display-font">Founder</h3>
+                        <h4 class="label-font" style="color: var(--primary); margin-bottom: 0.5rem;">TapeoutX (VLSI Student Community)</h4>
+                        <p>Founded student-driven VLSI brand. Built the TapeoutX community website as a hub for Discord, Instagram, and LinkedIn.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container contact-layout">
+            <div class="contact-text">
+                <span class="section-label label-font rev-in">// CONTACT</span>
+                <h2 class="section-heading display-font rev-in">LET'S TALK SILICON</h2>
+                
+                <div class="contact-links rev-in">
+                    <a href="mailto:lingamcharan09@gmail.com" class="contact-item">
+                        <span class="contact-icon"></span>
+                        <span class="label-font">lingamcharan09@gmail.com</span>
+                    </a>
+                    <a href="tel:+917842281810" class="contact-item">
+                        <span class="contact-icon"></span>
+                        <span class="label-font">+91 7842281810</span>
+                    </a>
+                </div>
+                
+                <div class="social-links rev-in">
+                    <a href="https://github.com/lingamcharan09-design" target="_blank" class="social-btn label-font">GITHUB</a>
+                    <a href="https://linkedin.com/in/lingam-charan-617187284" target="_blank" class="social-btn label-font">LINKEDIN</a>
+                    <a href="https://instagram.com/charan_vlsi" target="_blank" class="social-btn label-font">INSTAGRAM</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-stripe active" style="margin-top: var(--space-4); margin-bottom: 0; width: 100%;"></div>
+    </section>
+
+    <footer>
+        <div class="container" style="padding: 2rem 0; border-top: var(--border-w) solid var(--border); display: flex; justify-content: space-between;">
+            <span class="label-font" style="color: var(--muted); text-transform: none;">© 2026 Lingam Charan</span>
+            <span class="label-font" style="color: var(--muted);">Built with raw silicon energy</span>
+        </div>
+    </footer>
+
+    <script>
+        // Hero Word Cycle
+        const words = document.querySelectorAll('.cycle-word');
+        let currentIdx = 0;
+        
+        function cycleWords() {
+            const current = words[currentIdx];
+            const nextIdx = (currentIdx + 1) % words.length;
+            const next = words[nextIdx];
+            
+            current.classList.remove('visible');
+            current.classList.add('exiting');
+            
+            next.classList.remove('exiting');
+            next.classList.add('visible');
+            
+            setTimeout(() => {
+                current.classList.remove('exiting');
+            }, 300);
+            
+            currentIdx = nextIdx;
+        }
+        
+        setInterval(cycleWords, 2500);
+
+        // Intersection Observer for Rev-in Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.id === 'heroStripe') {
+                        entry.target.classList.add('active');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.rev-in').forEach((el) => {
+            observer.observe(el);
+        });
+        
+        // Trigger hero animations on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('#hero .rev-in').forEach(el => {
+                    el.classList.add('active');
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
