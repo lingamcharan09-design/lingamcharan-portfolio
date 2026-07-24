@@ -701,6 +701,57 @@
             color: var(--primary);
             border-color: var(--primary);
         }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding-top: 1rem;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.75rem 1rem;
+            }
+            .hero-layout {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-ctas {
+                justify-content: center;
+            }
+            .hero-stripe {
+                margin: 0 auto;
+            }
+            .hero-visual {
+                height: 300px;
+                margin-top: 2rem;
+            }
+            .about-layout {
+                grid-template-columns: 1fr;
+            }
+            .about-visual {
+                height: 350px;
+                margin-top: 2rem;
+            }
+            .tx-layout {
+                grid-template-columns: 1fr;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            .timeline-marker {
+                left: -1.5rem;
+            }
+            .contact-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
