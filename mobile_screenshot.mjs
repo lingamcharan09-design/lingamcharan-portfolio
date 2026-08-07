@@ -1,0 +1,1 @@
+import { chromium, devices } from 'playwright'; (async () => { const browser = await chromium.launch(); const context = await browser.newContext(devices['iPhone 13']); const page = await context.newPage(); await page.goto('http://localhost:3000'); await page.screenshot({ path: 'D:/temporary screenshots/mobile-view.png', fullPage: true }); await browser.close(); })();
