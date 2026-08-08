@@ -9,4 +9,7 @@ remove_bg.py
 screenshot.mjs
 serve.mjs
 mobile_screenshot.mjs
+mobile-view.png
+desktop-view.png
+mobile-menu-open.png
 .env
