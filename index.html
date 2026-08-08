@@ -480,7 +480,36 @@
             text-transform: uppercase;
         }
 
-        /* TapeoutX Section */
+        /* Mustang / Muscle Car Racing Accent Overlay */
+        .racing-stripes-bg {
+            position: absolute;
+            top: 0;
+            right: 8%;
+            width: 160px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.08;
+            display: flex;
+            gap: 18px;
+        }
+        .racing-stripe {
+            width: 65px;
+            height: 100%;
+            background: var(--primary);
+            transform: skewX(-14deg);
+        }
+
+        /* Carbon-Fiber Weave Texture for Muscle Car Cards */
+        .carbon-card {
+            background-color: var(--surface);
+            background-image: 
+                linear-gradient(135deg, rgba(20, 19, 16, 0.96) 0%, rgba(26, 24, 20, 0.96) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 6px);
+            box-shadow: var(--shadow);
+        }
+
+        /* TapeoutX Section & Telemetry Gauge Cluster */
         #tapeoutx {
             padding: 9rem 0;
         }
@@ -496,48 +525,77 @@
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
+        
+        /* RPM Telemetry Gauge Card */
         .tx-stat-card {
-            background-color: var(--bg);
-            padding: 2rem 1.5rem;
-            border-top: 3px solid var(--primary);
+            background-color: var(--surface);
+            background-image: 
+                linear-gradient(135deg, rgba(20, 19, 16, 0.97) 0%, rgba(26, 24, 20, 0.97) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.25) 0, rgba(0,0,0,0.25) 2px, transparent 2px, transparent 5px);
+            padding: 2.25rem 1.5rem 1.75rem 1.5rem;
+            border-top: 4px solid var(--primary);
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
             text-align: center;
-            transition: transform 250ms var(--ease);
+            position: relative;
+            transition: transform 250ms var(--ease), border-color 250ms var(--ease);
+            overflow: hidden;
+        }
+        .tx-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #FFF;
+            box-shadow: 0 0 10px var(--primary);
         }
         .tx-stat-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-6px) skewX(-2deg);
+            border-top-color: #FFF;
         }
         .tx-stat-num {
-            font-size: 3.25rem;
-            color: var(--text);
+            font-size: 3.5rem;
+            color: var(--primary);
             display: block;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.15rem;
+            text-shadow: 0 0 15px rgba(245, 197, 24, 0.25);
+            font-weight: 800;
         }
         .tx-stat-label {
-            color: var(--primary);
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
+            color: var(--text-soft);
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
         }
         .tx-brand {
             font-size: clamp(3rem, 6vw, 5rem);
             color: var(--text);
             line-height: 1;
             margin-bottom: 1rem;
-        }        /* Skills - Asymmetric Grid Layout */
+        }
+
+        /* Skills - Asymmetric Carbon Cards */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: var(--space-2);
-            margin-top: var(--space-2);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
         }
         
         .skill-card {
-            background-color: var(--bg);
+            background-color: var(--surface);
+            background-image: 
+                linear-gradient(135deg, rgba(20, 19, 16, 0.95) 0%, rgba(26, 24, 20, 0.95) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 6px);
             padding: 2rem;
             clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
             border-top: 3px solid var(--primary);
             transition: transform 250ms var(--ease), border-color 250ms var(--ease);
-            grid-column: span 12; /* Fallback for mobile */
+            grid-column: span 12;
+            position: relative;
         }
 
         @media (min-width: 850px) {
@@ -556,7 +614,8 @@
         .skill-cat {
             color: var(--primary);
             margin-bottom: 1rem;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
         }
         
         .skill-tags {
@@ -566,15 +625,16 @@
         }
         
         .skill-tag {
-            background-color: var(--border);
+            background-color: #1F1D17;
             color: var(--text);
             font-family: var(--font-mono);
             font-size: 0.8rem;
-            padding: 0.3rem 0.6rem;
+            padding: 0.35rem 0.75rem;
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            border-left: 2px solid var(--primary);
         }
 
-        /* Projects - Golden Ratio Asymmetric Layout */
+        /* Projects - Golden Ratio Asymmetric Carbon Layout */
         .projects-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -591,9 +651,12 @@
         
         .project-card {
             background-color: var(--surface);
-            padding: 2.2rem;
+            background-image: 
+                linear-gradient(135deg, rgba(20, 19, 16, 0.95) 0%, rgba(26, 24, 20, 0.95) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 6px);
+            padding: 2.4rem;
             transform: skewX(-2deg);
-            border-left: 4px solid var(--primary);
+            border-left: 5px solid var(--primary);
             transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
             display: flex;
             flex-direction: column;
@@ -601,20 +664,22 @@
         }
 
         .project-card.featured-card {
-            background: linear-gradient(135deg, #1A1814 0%, #24201A 100%);
-            border-left-width: 6px;
+            background-image: 
+                linear-gradient(135deg, rgba(26, 24, 20, 0.98) 0%, rgba(36, 32, 26, 0.98) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.4) 0, rgba(0,0,0,0.4) 2px, transparent 2px, transparent 6px);
+            border-left-width: 7px;
             position: relative;
         }
 
         .project-card.featured-card::before {
-            content: '// FEATURED';
+            content: '[ SPEC // FEATURED CHASSIS ]';
             position: absolute;
-            top: 1rem;
+            top: 1.25rem;
             right: 1.5rem;
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--primary);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             transform: skewX(2deg);
         }
         
@@ -919,14 +984,18 @@
     </header>
 
     <section id="hero">
+        <div class="racing-stripes-bg">
+            <div class="racing-stripe"></div>
+            <div class="racing-stripe"></div>
+        </div>
         <div class="container hero-layout">
             <div class="hero-content">
-                <div class="hero-label label-font rev-in">VLSI / SEMICONDUCTOR ENGINEER</div>
+                <div class="hero-label label-font rev-in">[ SPEC // 5.0 RTL PERFORMANCE ]</div>
                 <h1 class="hero-name display-font rev-in">LINGAM CHARAN</h1>
                 <div class="hero-stripe rev-in" id="heroStripe"></div>
                 
                 <div class="hero-subtitle rev-in">
-                    <span style="color: var(--muted)">//</span>
+                    <span style="color: var(--primary)">// TELEMETRY :</span>
                     <div class="cycle-wrapper">
                         <span class="cycle-word visible">VLSI Design Student</span>
                         <span class="cycle-word">RTL Design Enthusiast</span>
@@ -1098,20 +1167,24 @@
             </div>
             <div class="tx-stats">
                 <div class="tx-stat-card rev-in" style="transition-delay: 100ms;">
+                    <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 0.2rem;">[ RPM // DISCORD ]</div>
                     <span class="tx-stat-num display-font">220+</span>
-                    <span class="tx-stat-label label-font">DISCORD MEMBERS</span>
+                    <span class="tx-stat-label label-font">ACTIVE MEMBERS</span>
                 </div>
-                <div class="tx-stat-card rev-in" style="transition-delay: 200ms; transform: translateY(20px);">
+                <div class="tx-stat-card rev-in" style="transition-delay: 200ms;">
+                    <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 0.2rem;">[ RPM // INSTAGRAM ]</div>
                     <span class="tx-stat-num display-font">350+</span>
-                    <span class="tx-stat-label label-font">INSTAGRAM AUDIENCE</span>
+                    <span class="tx-stat-label label-font">TECH AUDIENCE</span>
                 </div>
                 <div class="tx-stat-card rev-in" style="transition-delay: 300ms;">
+                    <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 0.2rem;">[ RPM // TELEGRAM ]</div>
                     <span class="tx-stat-num display-font">150+</span>
-                    <span class="tx-stat-label label-font">TELEGRAM COMMUNITY</span>
+                    <span class="tx-stat-label label-font">COMMUNITY</span>
                 </div>
-                <div class="tx-stat-card rev-in" style="transition-delay: 400ms; transform: translateY(20px);">
+                <div class="tx-stat-card rev-in" style="transition-delay: 400ms;">
+                    <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 0.2rem;">[ RPM // INDUSTRY ]</div>
                     <span class="tx-stat-num display-font">2+</span>
-                    <span class="tx-stat-label label-font">INDUSTRY WEBINARS</span>
+                    <span class="tx-stat-label label-font">WEBINARS HELD</span>
                 </div>
             </div>
         </div>
