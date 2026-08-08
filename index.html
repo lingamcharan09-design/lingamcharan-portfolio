@@ -111,7 +111,7 @@
             transform: translateY(24px) scale(0.98);
             transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
         }
-        .rev-in.active {
+        .rev-in.active, #hero .rev-in {
             opacity: 1;
             transform: translateY(0) scale(1);
         }
@@ -185,10 +185,11 @@
 
         /* Hero */
         #hero {
-            min-height: 100vh;
+            min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
-            padding-top: 80px; /* offset for nav */
+            padding: 3rem 0;
+            margin-top: 80px;
             overflow: hidden;
         }
         
@@ -378,9 +379,9 @@
         }
 
         /* Utilities */
-                /* Section Pacing & Negative Space */
+        /* Section Pacing & Negative Space */
         section {
-            padding: 8.5rem 0;
+            padding: 4.5rem 0;
             position: relative;
         }
 
@@ -399,7 +400,7 @@
         /* About Section */
         #about {
             background-color: var(--bg);
-            padding-top: 10rem;
+            padding-top: 4.5rem;
         }
         
         .diagonal-top {
