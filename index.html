@@ -11,41 +11,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Base Theme Tokens — Top Banana / Muscle-Analog */
+        /* Base Theme Tokens — Math Rationale & Muscle-Analog */
         :root {
             --bg: #0A0A08;
-            --surface: #1A1814;
+            --surface: #141310;
+            --surface-hover: #1A1814;
             --primary: #F5C518;
             --accent: #F5C518;
-            --text: #F0EBE0;
+            --text: #E5E0D5;
+            --text-soft: #D6D0C2;
             --muted: #8A8575;
-            --border: #2A2720;
+            --border: #26231C;
 
             --font-display: 'Barlow Condensed', system-ui, sans-serif;
             --font-body: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
 
-            --ease: cubic-bezier(0.4, 0, 0.2, 1);
-            --dur: 350ms;
+            /* Luxe Easing (Math Rationale: deliberate acceleration cubic-bezier(0.65, 0, 0.35, 1)) */
+            --ease: cubic-bezier(0.65, 0, 0.35, 1);
+            --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+            --dur: 400ms;
 
             --radius: 2px;
             --border-w: 1.5px;
-            --shadow: 0 4px 8px rgba(0,0,0,.3), 0 16px 32px rgba(0,0,0,.2);
+            /* Gaussian halving shadow stack (halved blur & opacity each layer = natural light diffusion) */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 16px 36px rgba(245, 197, 24, 0.04);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.8), 0 24px 48px rgba(245, 197, 24, 0.08);
 
-            --space: 0.5rem;
-            --scale: 1.333;
-            --tracking-display: -0.02em;
-            --tracking-label: 0.10em;
+            --tracking-display: -0.01em;
+            --tracking-label: 0.12em;
 
             --stripe-w: 3px;
             --stripe-bold: 8px;
             --chrome: linear-gradient(135deg, #8A8575 0%, #F0EBE0 45%, #8A8575 100%);
-            
-            /* Fibonacci Spacing */
-            --space-1: 34px;
-            --space-2: 55px;
-            --space-3: 89px;
-            --space-4: 144px;
         }
 
         /* Reset & Base */
@@ -59,7 +57,7 @@
             background-color: var(--bg);
             color: var(--text);
             font-family: var(--font-body);
-            line-height: 1.7;
+            line-height: 1.8;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             position: relative;
@@ -91,7 +89,7 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 var(--space-2);
+            padding: 0 2.5rem;
         }
 
         /* Background Noise/Grain */
@@ -103,14 +101,14 @@
             height: 100vh;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.025; /* Very subtle 1/f spatial frequency feel */
+            opacity: 0.028; /* Subtle 1/f spatial frequency grain overlay */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
         
         /* Animations */
         .rev-in {
             opacity: 0;
-            transform: translateY(20px) scale(0.97);
+            transform: translateY(24px) scale(0.98);
             transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
         }
         .rev-in.active {
@@ -154,7 +152,7 @@
         
         nav {
             display: flex;
-            gap: var(--space-2);
+            gap: 2.25rem;
         }
         
         .nav-link {
@@ -363,19 +361,28 @@
         }
 
         /* Utilities */
+                /* Section Pacing & Negative Space */
+        section {
+            padding: 8.5rem 0;
+            position: relative;
+        }
+
         .section-label {
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             display: inline-block;
+            letter-spacing: 0.15em;
         }
         
         .section-heading {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: var(--space-3);
-        }        /* About */
+            font-size: clamp(2.75rem, 5.5vw, 4.5rem);
+            margin-bottom: 3.5rem;
+        }
+
+        /* About Section */
         #about {
             background-color: var(--bg);
-            padding-top: var(--space-4);
+            padding-top: 10rem;
         }
         
         .diagonal-top {
@@ -392,19 +399,21 @@
         
         .about-layout {
             display: grid;
-            grid-template-columns: 55% 45%;
-            gap: var(--space-3);
+            grid-template-columns: 61.8% 38.2%;
+            gap: 3.5rem;
             align-items: center;
         }
         
         .about-text p {
-            margin-bottom: 1rem;
-            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            font-size: 1.15rem;
+            color: #D6D0C2;
+            line-height: 1.8;
         }
         
         .quote-block {
-            margin-top: var(--space-2);
-            padding: 1.5rem;
+            margin-top: 2.5rem;
+            padding: 1.75rem 2rem;
             background-color: var(--surface);
             border-left: 4px solid var(--primary);
             position: relative;
@@ -413,11 +422,13 @@
             font-style: italic;
             margin-bottom: 0;
             color: var(--text);
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
         
         .about-visual {
             position: relative;
-            height: 450px;
+            height: 480px;
             overflow: visible;
         }
         
@@ -459,7 +470,7 @@
             width: auto;
             object-fit: contain;
             z-index: 3;
-            filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.6));
+            filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.75));
         }
 
         .placeholder-text {
@@ -470,26 +481,34 @@
         }
 
         /* TapeoutX Section */
+        #tapeoutx {
+            padding: 9rem 0;
+        }
+
         .tx-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-3);
+            grid-template-columns: 61.8% 38.2%;
+            gap: 3.5rem;
             align-items: center;
         }
         .tx-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 1.5rem;
         }
         .tx-stat-card {
             background-color: var(--bg);
-            padding: 1.5rem;
-            border-top: 2px solid var(--primary);
+            padding: 2rem 1.5rem;
+            border-top: 3px solid var(--primary);
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
             text-align: center;
+            transition: transform 250ms var(--ease);
+        }
+        .tx-stat-card:hover {
+            transform: translateY(-6px);
         }
         .tx-stat-num {
-            font-size: 3rem;
+            font-size: 3.25rem;
             color: var(--text);
             display: block;
             margin-bottom: 0.25rem;
@@ -497,16 +516,17 @@
         .tx-stat-label {
             color: var(--primary);
             font-size: 0.85rem;
+            letter-spacing: 0.1em;
         }
         .tx-brand {
             font-size: clamp(3rem, 6vw, 5rem);
             color: var(--text);
             line-height: 1;
             margin-bottom: 1rem;
-        }  /* Skills */
+        }        /* Skills - Asymmetric Grid Layout */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(12, 1fr);
             gap: var(--space-2);
             margin-top: var(--space-2);
         }
@@ -516,16 +536,27 @@
             padding: 2rem;
             clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
             border-top: 3px solid var(--primary);
-            transition: transform 200ms var(--ease);
+            transition: transform 250ms var(--ease), border-color 250ms var(--ease);
+            grid-column: span 12; /* Fallback for mobile */
         }
+
+        @media (min-width: 850px) {
+            .skill-card:nth-child(1) { grid-column: span 7; }
+            .skill-card:nth-child(2) { grid-column: span 5; }
+            .skill-card:nth-child(3) { grid-column: span 4; }
+            .skill-card:nth-child(4) { grid-column: span 4; }
+            .skill-card:nth-child(5) { grid-column: span 4; }
+        }
+
         .skill-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-5px);
+            border-top-color: #FFF;
         }
         
         .skill-cat {
             color: var(--primary);
             margin-bottom: 1rem;
-            font-size: 1rem;
+            font-size: 1.05rem;
         }
         
         .skill-tags {
@@ -539,28 +570,56 @@
             color: var(--text);
             font-family: var(--font-mono);
             font-size: 0.8rem;
-            padding: 0.25rem 0.5rem;
+            padding: 0.3rem 0.6rem;
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
         }
 
-        /* Projects */
+        /* Projects - Golden Ratio Asymmetric Layout */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: var(--space-3);
-            margin-top: var(--space-2);
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-top: 2.5rem;
+        }
+
+        @media (min-width: 900px) {
+            .projects-grid {
+                grid-template-columns: 61.8% 38.2%;
+                align-items: stretch;
+            }
         }
         
         .project-card {
             background-color: var(--surface);
-            padding: 2rem;
+            padding: 2.2rem;
             transform: skewX(-2deg);
             border-left: 4px solid var(--primary);
             transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card.featured-card {
+            background: linear-gradient(135deg, #1A1814 0%, #24201A 100%);
+            border-left-width: 6px;
+            position: relative;
+        }
+
+        .project-card.featured-card::before {
+            content: '// FEATURED';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            transform: skewX(2deg);
         }
         
         .project-card:hover {
-            transform: skewX(-2deg) translateX(8px);
+            transform: skewX(-2deg) translateY(-6px);
             box-shadow: var(--shadow);
         }
         
@@ -569,7 +628,7 @@
         }
         
         .project-content h3 {
-            font-size: 1.75rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             color: var(--text);
         }
@@ -595,11 +654,11 @@
             font-size: 0.95rem;
         }
 
-        /* Experience */
+        /* Experience Timeline */
         .timeline {
-            margin-top: var(--space-2);
+            margin-top: 3.5rem;
             position: relative;
-            padding-left: 3rem;
+            padding-left: 3.5rem;
         }
         
         .timeline::before {
@@ -609,48 +668,61 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background-color: var(--border);
+            background: linear-gradient(180deg, var(--primary) 0%, var(--border) 100%);
         }
         
         .timeline-item {
             position: relative;
-            margin-bottom: var(--space-3);
+            margin-bottom: 3.5rem;
         }
         
         .timeline-marker {
             position: absolute;
-            left: -3rem;
-            top: 0.5rem;
+            left: -3.5rem;
+            top: 0.75rem;
             width: 0;
             height: 0;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
             border-left: 12px solid var(--primary);
-            transform: translateX(-5px); /* center over the 2px line */
+            transform: translateX(-5px); /* center over line */
         }
         
         .timeline-content {
-            background-color: var(--bg);
-            padding: 1.5rem 2rem;
+            background-color: var(--surface);
+            padding: 1.75rem 2.25rem;
             clip-path: polygon(0 0, 100% 0, 98% 100%, 0 100%);
+            border-left: 3px solid var(--border);
+            transition: transform 250ms var(--ease), border-color 250ms var(--ease);
+        }
+        .timeline-content:hover {
+            transform: translateX(6px);
+            border-left-color: var(--primary);
         }
         
         .timeline-date {
-            color: var(--muted);
+            color: var(--primary);
             margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
         }
         
         .timeline-content h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--text);
         }
         
         .timeline-content p {
-            color: var(--text);
+            color: var(--text-soft);
             margin-top: 0.5rem;
+            font-size: 1rem;
         }
 
         /* Contact */
+        #contact {
+            padding: 9rem 0;
+        }
+
         .contact-layout {
             display: flex;
             flex-direction: column;
@@ -661,8 +733,8 @@
         .contact-links {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            margin: var(--space-2) 0;
+            gap: 1.25rem;
+            margin: 3rem 0;
             align-items: center;
         }
         
@@ -670,46 +742,53 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 2rem;
+            padding: 1.125rem 2.25rem;
             background-color: var(--surface);
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-            transition: transform 200ms var(--ease);
+            border-left: 3px solid var(--primary);
+            transition: transform 250ms var(--ease), background-color 250ms var(--ease);
             width: fit-content;
         }
         
         .contact-item:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            background-color: var(--surface-hover);
         }
         
         .contact-item:hover .label-font {
             color: var(--primary);
         }
-        
-        .contact-icon {
-            width: 16px;
-            height: 16px;
-            background-color: var(--primary);
-            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+
+        .contact-icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--primary);
+            flex-shrink: 0;
         }
         
         .social-links {
             display: flex;
-            gap: 1rem;
+            gap: 1.25rem;
             justify-content: center;
             flex-wrap: wrap;
         }
         
         .social-btn {
-            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.75rem;
+            background-color: var(--surface);
             border: 1px solid var(--border);
             color: var(--text);
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            transition: color 200ms var(--ease), border-color 200ms var(--ease);
+            transition: color 250ms var(--ease), border-color 250ms var(--ease), transform 250ms var(--ease);
         }
         
         .social-btn:hover {
             color: var(--primary);
             border-color: var(--primary);
+            transform: translateY(-3px);
         }
 
         /* Mobile Responsiveness */
@@ -975,7 +1054,7 @@
             
             <div class="projects-grid">
                 <!-- Project 1 -->
-                <div class="project-card rev-in">
+                <div class="project-card featured-card rev-in">
                     <div class="project-content">
                         <h3 class="display-font">Synchronous FIFO Memory Controller</h3>
                         <div class="project-tags label-font">
@@ -984,7 +1063,7 @@
                             <span>ModelSim</span>
                         </div>
                         <p>Designed and implemented a synchronous FIFO buffer in Verilog with an 8-bit wide, 16-deep memory array. Developed the controller logic using separate read/write pointers and status flags computed based on an internal item counter. Simulated and verified read, write, and boundary conditions using ModelSim.</p>
-                        <a href="https://github.com/lingamcharan09-design" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-top: 1rem;">VIEW ON GITHUB</a>
+                        <a href="https://github.com/lingamcharan09-design/FIFO" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-top: 1rem;">VIEW ON GITHUB</a>
                     </div>
                 </div>
                 
@@ -997,7 +1076,7 @@
                             <span>ModelSim</span>
                         </div>
                         <p>Designed an 8-bit wide, 16-deep LIFO/FILO hardware stack in Verilog. Designed stack pointer controls and counter logic to track stack depth, incorporating full and empty flag logic. Modeled and simulated simultaneous read and write (push-pop) concurrency cases to verify data routing and flag behavior.</p>
-                        <a href="https://github.com/lingamcharan09-design" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-top: 1rem;">VIEW ON GITHUB</a>
+                        <a href="https://github.com/lingamcharan09-design/FILO" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-top: 1rem;">VIEW ON GITHUB</a>
                     </div>
                 </div>
             </div>
@@ -1068,7 +1147,7 @@
                 <div class="timeline-item rev-in">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content" style="background-color: var(--surface);">
-                        <div class="timeline-date label-font">June 2025</div>
+                        <div class="timeline-date label-font">June 2025 (45 Days)</div>
                         <h3 class="display-font">Silicon RTL Design Intern</h3>
                         <h4 class="label-font" style="color: var(--primary); margin-bottom: 0.5rem;">Maven Silicon</h4>
                         <p>Completed intensive RTL design training focused on ASIC/SoC design flows, logic synthesis, HDLs, and synchronous design methodologies.</p>
@@ -1128,6 +1207,7 @@
                 <div class="social-links rev-in">
                     <a href="https://github.com/lingamcharan09-design" target="_blank" class="social-btn label-font">GITHUB</a>
                     <a href="https://linkedin.com/in/lingam-charan-617187284" target="_blank" class="social-btn label-font">LINKEDIN</a>
+                    <a href="https://www.instagram.com/tapeoutx" target="_blank" class="social-btn label-font">INSTAGRAM</a>
                 </div>
             </div>
         </div>
