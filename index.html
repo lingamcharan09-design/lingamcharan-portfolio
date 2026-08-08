@@ -313,52 +313,45 @@
             height: 480px;
             overflow: visible;
         }
-        
-        .shape {
+
+        .photo-frame {
             position: absolute;
+            top: 6%;
+            left: 10%;
+            width: 80%;
+            height: 88%;
             background-color: var(--surface);
-            transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-        }
-        
-        .shape-1 {
-            width: 60%;
-            height: 300px;
-            right: 10%;
-            top: 20%;
-            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0% 100%);
-            border-bottom: 4px solid var(--primary);
-            z-index: 2;
-        }
-        
-        .shape-2 {
-            width: 40%;
-            height: 400px;
-            right: 0;
-            top: 10%;
-            background-color: var(--bg);
-            border: 2px solid var(--border);
-            clip-path: polygon(0 0, 100% 15%, 100% 100%, 15% 100%);
+            background-image: 
+                linear-gradient(135deg, rgba(20, 19, 16, 0.95) 0%, rgba(26, 24, 20, 0.95) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 6px);
+            clip-path: polygon(12% 0, 100% 0, 88% 100%, 0% 100%);
+            border-left: 3px solid var(--primary);
+            box-shadow: var(--shadow);
             z-index: 1;
         }
-        
-        .shape-3 {
-            width: 25%;
-            height: 80px;
-            right: 50%;
-            top: 60%;
-            background: var(--chrome);
-            clip-path: polygon(20% 0, 100% 0, 80% 100%, 0% 100%);
-            z-index: 3;
-        }
-        
-        .shape-4 {
-            width: 15%;
-            height: 200px;
-            right: 25%;
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
             top: 0;
-            background-color: var(--primary);
-            clip-path: polygon(0 0, 100% 0, 60% 100%, 0% 100%);
-            z-index: 4;
+            right: 0;
+            width: 35px;
+            height: 35px;
+            border-top: 4px solid var(--primary);
+            border-right: 4px solid var(--primary);
+            z-index: 2;
+        }
+
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 35px;
+            height: 35px;
+            border-bottom: 4px solid var(--primary);
+            border-left: 4px solid var(--primary);
+            z-index: 2;
         }
 
         /* Utilities */
