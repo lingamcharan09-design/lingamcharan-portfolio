@@ -414,52 +414,29 @@
         
         .quote-block {
             margin-top: 2.5rem;
-            padding: 1.75rem 2rem;
-            background-color: var(--surface);
-            border-left: 4px solid var(--primary);
+            padding: 2rem 2.25rem;
+            background: linear-gradient(135deg, rgba(20, 19, 16, 0.95) 0%, rgba(26, 24, 20, 0.95) 100%);
+            border-left: 5px solid var(--primary);
+            clip-path: polygon(0 0, 100% 0, 97% 100%, 0% 100%);
             position: relative;
+            box-shadow: var(--shadow);
+        }
+        .quote-block::before {
+            content: '“';
+            position: absolute;
+            top: 0.5rem;
+            right: 1.5rem;
+            font-size: 4rem;
+            font-family: serif;
+            color: rgba(245, 197, 24, 0.15);
+            line-height: 1;
         }
         .quote-block p {
             font-style: italic;
             margin-bottom: 0;
             color: var(--text);
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
-        
-        .about-visual {
-            position: relative;
-            height: 480px;
-            overflow: visible;
-        }
-        
-        .photo-frame {
-            width: 100%;
-            height: 100%;
-            background-color: var(--surface);
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        .photo-frame::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 40px; height: 40px;
-            border-top: 4px solid var(--primary);
-            border-right: 4px solid var(--primary);
-            z-index: 2;
-        }
-        .photo-frame::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 40px; height: 40px;
-            border-bottom: 4px solid var(--primary);
-            border-left: 4px solid var(--primary);
-            z-index: 2;
+            font-size: 1.1rem;
+            line-height: 1.75;
         }
         
         .hero-visual img, .hero-portrait-img {
@@ -477,18 +454,73 @@
         .about-visual {
             position: relative;
             height: auto;
-            min-height: 380px;
         }
 
         .about-card-spec {
             background-color: var(--surface);
             background-image: 
-                linear-gradient(135deg, rgba(20, 19, 16, 0.96) 0%, rgba(26, 24, 20, 0.96) 100%),
+                linear-gradient(135deg, rgba(20, 19, 16, 0.97) 0%, rgba(26, 24, 20, 0.97) 100%),
                 repeating-linear-gradient(45deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 6px);
-            padding: 2.5rem;
-            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            padding: 2.25rem 2rem;
+            clip-path: polygon(6% 0, 100% 0, 94% 100%, 0% 100%);
             border-left: 5px solid var(--primary);
+            border-top: 2px solid rgba(245, 197, 24, 0.3);
             box-shadow: var(--shadow);
+            transform: skewX(-2deg);
+        }
+
+        .about-spec-content {
+            transform: skewX(2deg);
+        }
+
+        .spec-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .spec-row {
+            display: flex;
+            flex-direction: column;
+            background: rgba(10, 10, 8, 0.6);
+            padding: 0.9rem 1.15rem;
+            border-left: 3px solid var(--primary);
+            transition: transform 200ms var(--ease), border-color 200ms var(--ease), background-color 200ms var(--ease);
+        }
+
+        .spec-row:hover {
+            transform: translateX(6px);
+            border-left-color: #FFF;
+            background: rgba(26, 24, 20, 0.85);
+        }
+
+        .spec-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-idx {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+        }
+
+        .spec-title {
+            font-family: var(--font-label);
+            font-size: 0.82rem;
+            color: var(--text);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .spec-val {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         .placeholder-text {
@@ -1054,14 +1086,44 @@
             
             <div class="about-visual rev-in">
                 <div class="about-card-spec">
-                    <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1rem;">[ CHASSIS // HARDWARE SPEC ]</div>
-                    <h3 class="display-font" style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--text);">DIGITAL LOGIC & RTL ARCHITECTURE</h3>
-                    <ul style="list-style: none; padding: 0; color: var(--text-soft); font-size: 0.95rem; line-height: 2;">
-                        <li><strong style="color: var(--primary);">01. FOCUS:</strong> Synchronous FIFO / FILO Memory Units</li>
-                        <li><strong style="color: var(--primary);">02. TOOLCHAIN:</strong> Quartus Prime, ModelSim, Xilinx ISE</li>
-                        <li><strong style="color: var(--primary);">03. HDL:</strong> Verilog HDL & RTL Synthesis</li>
-                        <li><strong style="color: var(--primary);">04. COMMUNITY:</strong> Founder of TapeoutX</li>
-                    </ul>
+                    <div class="about-spec-content">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 0.75rem;">[ CHASSIS // HARDWARE SPEC MATRIX ]</div>
+                        <h3 class="display-font" style="font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--text);">DIGITAL LOGIC & RTL ARCHITECTURE</h3>
+                        
+                        <div class="spec-grid">
+                            <div class="spec-row">
+                                <div class="spec-row-header">
+                                    <span class="spec-title">PRIMARY FOCUS</span>
+                                    <span class="spec-idx">[ SPEC // 01 ]</span>
+                                </div>
+                                <div class="spec-val">Synchronous FIFO / FILO Memory Units</div>
+                            </div>
+
+                            <div class="spec-row">
+                                <div class="spec-row-header">
+                                    <span class="spec-title">EDA TOOLCHAIN</span>
+                                    <span class="spec-idx">[ SPEC // 02 ]</span>
+                                </div>
+                                <div class="spec-val">Intel Quartus Prime, ModelSim, Xilinx ISE</div>
+                            </div>
+
+                            <div class="spec-row">
+                                <div class="spec-row-header">
+                                    <span class="spec-title">SYNTHESIS & HDL</span>
+                                    <span class="spec-idx">[ SPEC // 03 ]</span>
+                                </div>
+                                <div class="spec-val">Verilog HDL, FSM Logic & RTL Synthesis</div>
+                            </div>
+
+                            <div class="spec-row">
+                                <div class="spec-row-header">
+                                    <span class="spec-title">INITIATIVE</span>
+                                    <span class="spec-idx">[ SPEC // 04 ]</span>
+                                </div>
+                                <div class="spec-val">Founder & Community Lead at TapeoutX</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
