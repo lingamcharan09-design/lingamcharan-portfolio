@@ -306,52 +306,75 @@
             transform: translateY(-2px);
         }
         
-        /* Hero Visual - Mustang Framed Portrait */
+        /* Hero Visual - Mustang Framed Portrait Card */
         .hero-visual {
             position: relative;
             width: 100%;
             height: 480px;
-            overflow: visible;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
         }
 
-        .photo-frame {
-            position: absolute;
-            top: 6%;
-            left: 10%;
-            width: 80%;
-            height: 88%;
+        .hero-portrait-card {
+            position: relative;
+            width: 360px;
+            height: 440px;
             background-color: var(--surface);
             background-image: 
-                linear-gradient(135deg, rgba(20, 19, 16, 0.95) 0%, rgba(26, 24, 20, 0.95) 100%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 6px);
-            clip-path: polygon(12% 0, 100% 0, 88% 100%, 0% 100%);
-            border-left: 3px solid var(--primary);
-            box-shadow: var(--shadow);
-            z-index: 1;
+                radial-gradient(circle at 50% 35%, rgba(245, 197, 24, 0.15) 0%, transparent 65%),
+                linear-gradient(135deg, rgba(20, 19, 16, 0.98) 0%, rgba(26, 24, 20, 0.98) 100%);
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(245, 197, 24, 0.15);
+            overflow: hidden;
         }
 
-        .photo-frame::before {
+        .hero-portrait-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            filter: contrast(1.05) brightness(1.02);
+            transition: transform 300ms var(--ease);
+        }
+
+        .hero-portrait-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 35px;
-            height: 35px;
+            top: 0; right: 0;
+            width: 35px; height: 35px;
             border-top: 4px solid var(--primary);
             border-right: 4px solid var(--primary);
-            z-index: 2;
+            z-index: 5;
+            pointer-events: none;
         }
 
-        .photo-frame::after {
+        .hero-portrait-card::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 35px;
-            height: 35px;
+            bottom: 0; left: 0;
+            width: 35px; height: 35px;
             border-bottom: 4px solid var(--primary);
             border-left: 4px solid var(--primary);
-            z-index: 2;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .hero-portrait-badge {
+            position: absolute;
+            bottom: 1.25rem;
+            left: 1.25rem;
+            right: 1.25rem;
+            background: rgba(10, 10, 8, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 0.6rem 1rem;
+            border-left: 3px solid var(--primary);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--primary);
+            letter-spacing: 0.12em;
+            z-index: 6;
         }
 
         /* Utilities */
@@ -432,7 +455,7 @@
             line-height: 1.75;
         }
         
-        .hero-visual img, .hero-portrait-img {
+        .hero-portrait-img {
             position: absolute;
             bottom: 0;
             left: 45%;
@@ -1054,8 +1077,10 @@
             </div>
             
             <div class="hero-visual rev-in" style="transition-delay: 150ms;">
-                <div class="photo-frame"></div>
-                <img src="assets/images/portrait.png" alt="Lingam Charan" class="hero-portrait-img">
+                <div class="hero-portrait-card">
+                    <img src="assets/images/portrait.png" alt="Lingam Charan">
+                    <div class="hero-portrait-badge">// LINGAM CHARAN // RTL ENGINEER</div>
+                </div>
             </div>
         </div>
     </section>

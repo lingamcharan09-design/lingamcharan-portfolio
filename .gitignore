@@ -1,0 +1,12 @@
+node_modules/
+push.ps1
+clean_background.cjs
+test_card.cjs
+test_card.js
+image copy*.png
+image*.png
+remove_bg.py
+screenshot.mjs
+serve.mjs
+mobile_screenshot.mjs
+.env
